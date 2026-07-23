@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mapping Ludwigia spp. with Maximum Likelihood Classification — Anthony Fowler</title>
+<meta name="description" content="A remote-sensing case study mapping invasive water primrose (Ludwigia spp.) in the Smith and Bybee Wetland Natural Area, Oregon, using freely available aerial imagery and maximum likelihood classification. M.S. research by Anthony Fowler." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<a class="skip" href="#intro">Skip to content</a>
+
+<!-- Mobile top bar -->
+<header class="topbar">
+  <div class="topbar__id"><b><i>Ludwigia</i> spp.</b> · M.S. research</div>
+  <button class="topbar__toggle" id="menuToggle" aria-expanded="false" aria-controls="rail">Contents</button>
+</header>
+
+<div class="rail-backdrop" id="railBackdrop"></div>
+
+<!-- Contents rail -->
+<nav class="rail" id="rail" aria-label="Section contents">
+  <div class="rail__brand"><i>Ludwigia</i> spp.</div>
+  <div class="rail__sub">Smith &amp; Bybee Wetlands · 2024</div>
+  <ol class="toc" id="toc">
+    <li><a href="#summary">Summary</a></li>
+    <li><a href="#intro">Introduction</a></li>
+    <li><a href="#litreview">Literature Review</a></li>
+    <li><a href="#methods">Methodology</a></li>
+    <li><a href="#results">Results</a></li>
+    <li><a href="#discussion">Discussion</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+    <li><a href="#references">References</a></li>
+  </ol>
+  <div class="rail__legend">
+    <h4>Land-cover classes</h4>
+    <span class="chip lud"><i>Ludwigia</i> spp.</span>
+    <span class="chip veg">Other vegetation</span>
+    <span class="chip soil">Bare soil</span>
+    <span class="chip water">Open water</span>
+  </div>
+</nav>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero__grid">
+        <div class="hero__intro">
+          <p class="hero__eyebrow">M.S. Research · Remote Sensing &amp; GIS</p>
+          <h1>Finding <em>Ludwigia</em><span class="tag">Mapping an invasive water primrose from the air, one green pixel at a time.</span></h1>
+          <p class="hero__title">Identifying <span class="sci">Ludwigia</span> spp. using maximum likelihood classification: a case study for the Smith and Bybee Wetland Natural Area, Oregon.</p>
+          <div class="hero__meta">
+            <span><b>Anthony Fowler</b></span>
+            <span>Northwest Missouri State University</span>
+            <span>M.S. · April 2024</span>
+          </div>
+        </div>
+        <figure class="hero__fig">
+          <img src="images/fig5-classification-map.png" alt="Maximum likelihood classification map of the Smith and Bybee Wetland Natural Area, with Ludwigia in green, other vegetation in red, bare soil in orange, and water in blue." loading="eager" />
+          <div class="legend-strip">
+            <span class="chip lud"><i>Ludwigia</i></span>
+            <span class="chip veg">Other veg.</span>
+            <span class="chip soil">Bare soil</span>
+            <span class="chip water">Water</span>
+          </div>
+          <figcaption>The classified wetland. Detecting the green class is the entire task.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STAT BAND ============ -->
+  <section class="stats" aria-label="Key results">
+    <div class="wrap">
+      <div class="stats__inner">
+        <div class="stat signal">
+          <div class="stat__num">89.2<span class="u">%</span></div>
+          <div class="stat__label">Overall accuracy</div>
+        </div>
+        <div class="stat">
+          <div class="stat__num">0.856</div>
+          <div class="stat__label">Kappa statistic</div>
+        </div>
+        <div class="stat signal">
+          <div class="stat__num">90.0<span class="u">%</span></div>
+          <div class="stat__label">User's accuracy · <i>Ludwigia</i></div>
+        </div>
+        <div class="stat">
+          <div class="stat__num">240</div>
+          <div class="stat__label">Digitized sites · 4 classes</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SUMMARY ============ -->
+  <section class="section" id="summary">
+    <div class="wrap">
+      <div class="summary-grid">
+        <p class="lede">A repeatable way to find an aggressive wetland invader using free imagery and off-the-shelf GIS.</p>
+        <div class="prose">
+          <p>This study applies remote sensing to map invasive water primrose (<span class="sci">Ludwigia</span> spp.) across the Smith and Bybee Wetland Natural Area in Portland, Oregon. Using freely available 2018 aerial imagery from the Oregon Statewide Imagery Program (OSIP) and a maximum likelihood classifier run in widely available software, it produced a four-class land-cover map that identified <span class="sci">Ludwigia</span> with an overall accuracy of 89.2% and a kappa statistic of 0.856.</p>
+          <p>The method was designed to be replicable. It runs on standard computing systems with accessible tools and imagery, giving wetland managers a workflow they can adapt for localized invasive-species monitoring rather than a result that depends on specialized infrastructure.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INTRODUCTION ============ -->
+  <section class="section" id="intro">
+    <div class="wrap">
+      <div class="section__head"><span class="section__no">01</span><h2>Introduction</h2></div>
+      <div class="prose">
+        <h3>Background</h3>
+        <p>Invasive plants pose a substantial and growing threat to ecosystem stability worldwide, presenting a persistent challenge for conservationists and land managers. Ranked as the second greatest threat to biodiversity after habitat fragmentation, invasive species jeopardize native plant communities by monopolizing essential resources including light, space, and nutrients. Beyond direct competition, they can alter fundamental ecosystem processes such as fire regimes, hydrology, and nutrient cycling, reducing an ecosystem's resilience to external pressures (Khanna et al. 2011). These cascading effects extend to wildlife populations that depend on native plants for food, shelter, and reproduction, potentially driving population declines or local extinctions (Dandelot et al. 2005). Invasive species also carry significant economic consequences for forestry, agriculture, and fisheries through competitive displacement of desired species and interference with transportation infrastructure (Ade et al. 2022).</p>
+
+        <p>Many invasive species share high growth rates and reproductive output, allowing them to establish dominance rapidly in the absence of natural predators, pathogens, and competitors. In aquatic systems, <span class="sci">Ludwigia</span> spp. (water primrose) exemplifies this pattern: it can double in biomass every two weeks, forming dense floating mats that disrupt water flow, reduce dissolved oxygen, block sunlight, and elevate water temperatures. These conditions degrade habitat for native aquatic flora and fauna (Dandelot et al. 2005). In terrestrial environments, species such as reed canary grass alter soil chemistry and form dense thickets that exclude native seedlings from sunlight, producing monocultures detrimental to biodiversity (Metro 2012).</p>
+
+        <p class="pull">Without effective monitoring, the impacts of invasive species will only continue to proliferate.</p>
+
+        <p>The need for scalable detection has elevated the role of remote sensing in invasive-species management (Parker et al. 2021). Remote sensing enables large-scale ecosystem monitoring, providing spatially explicit data that supports both the classification and the management of invasive populations. Platforms including multispectral (Alvarez-Taboada et al. 2017) and hyperspectral sensors (Khanna et al. 2011), as well as unmanned aerial vehicles (Mafanya et al. 2018), have expanded the toolkit available for environmental monitoring. These systems capture data beyond the visible spectrum, allowing analysis of the spectral signatures unique to different plant species and helping identify invasive populations across varied landscapes.</p>
+
+        <p>Applying these technologies to invasive-species classification is not straightforward. Spectral and textural similarities between invasive and native vegetation (Alvarez-Taboada et al. 2017), intraspecific phenotypic variability (Hestir et al. 2007), the absence of high-resolution distribution models (Diao and Wang 2014), and the complexity of heterogeneous ecosystems (Vanonckelen et al. 2013) all present hurdles to accurate classification. Parker et al. (2021) further emphasize the need for stronger collaboration between remote-sensing researchers and field practitioners, to bridge the gap between methodological development and operational application.</p>
+
+        <h3>Research objective</h3>
+        <p>The objective of this study is to apply remote-sensing methods to the classification and mapping of invasive <span class="sci">Ludwigia</span> spp. within the Smith and Bybee Wetland Natural Area, Portland, Oregon. The project uses the Oregon Statewide Imagery Program's (OSIP) 2018 aerial multispectral imagery to identify the species through maximum likelihood classification (MLC), a supervised learning approach. It tests MLC's effectiveness using widely available software (ERDAS Imagine and ArcGIS Pro) and freely accessible imagery, with the goal of giving wetland managers a replicable methodology that can be executed on standard computing systems and adapted for localized invasive-species monitoring.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LITERATURE REVIEW ============ -->
+  <section class="section" id="litreview">
+    <div class="wrap">
+      <div class="section__head"><span class="section__no">02</span><h2>Literature Review</h2></div>
+      <div class="prose">
+        <h3>Classification in diverse ecosystems</h3>
+        <p>Classifying invasive species in heterogeneous landscapes is complicated by the variability of spectral and textural properties across vegetation types, and by the co-occurrence of multiple species within a single pixel or image object. Laba et al. (2007) applied fuzzy-set analysis to high-resolution QuickBird satellite imagery to map invasive wetland plants in the Hudson River National Estuarine Research Reserve, improving classification accuracy by roughly 10% over standard maximum likelihood approaches.</p>
+        <p>Vanonckelen et al. (2013) assessed how atmospheric and topographic corrections affect land-cover classification accuracy in the Romanian Carpathians, a mountainous environment where terrain-induced illumination differences complicate spectral analysis. Applying transmittance functions for atmospheric correction and a pixel-based Minnaert correction for topographic adjustment improved differentiation among land-cover classes and reduced spectral overlap, yielding an accuracy improvement of about 7%. Hestir et al. (2007) similarly demonstrated the value of preprocessing for hyperspectral imagery: using logistic-regression models and binary decision trees that incorporated spectral mixture analysis, spectral angle mapping, band indices, and continuum removal, they achieved producer accuracies of 59.2% to 63.0% and user accuracies of 69.1% to 92.1% in the California Delta. Together these studies underscore the importance of tailoring preprocessing and classification to the specific spectral and environmental characteristics of a study area.</p>
+
+        <h3>Biological challenges</h3>
+        <p>Biological complexity introduces its own difficulties. Khanna et al. (2011) encountered phenotypic variability among aquatic species including water hyacinth, pennywort, and water primrose, which produced diverse spectral responses within a single species. They addressed this with hyperspectral methods, including spectral angle mapper and linear spectral unmixing in a decision-tree framework, classifying species by biophysiological differences. Hestir et al. (2007) likewise stressed the importance of accounting for spectral variation driven by plant phenology when identifying invasive vegetation.</p>
+        <p>Other researchers have tackled genus-level discrimination with different sensor and classifier combinations. Ade et al. (2022) used random-forest classifiers with Sentinel-2 multispectral data to differentiate invasive aquatic vegetation genera with high accuracy. Laba et al. (2007) combined maximum likelihood classification with fuzzy-set analysis for multispectral QuickBird imagery in tidal wetlands. Diao and Wang (2014) built a fine-scale species distribution model for saltcedar by integrating environmental variables with logistic regression and spatial autocorrelation analysis. Collectively, these studies show that classification accuracy depends on matching the classifier and input data to the biological and spectral characteristics of the target species.</p>
+
+        <h3>Imagery sources</h3>
+        <p><b>Multispectral imaging</b> captures data across several spectral bands beyond conventional red, green, and blue, typically including near-infrared and sometimes shortwave infrared. This expanded range allows vegetation types to be told apart by their reflectance. Alvarez-Taboada et al. (2017) applied multispectral imaging from both UAV and WorldView-2 platforms to map <span class="sci">Hakea sericea</span>, and Ade et al. (2022) used Sentinel-2 data for genus-level mapping of invasive aquatic vegetation, showing the technology's capacity for finer taxonomic distinctions in complex ecosystems.</p>
+        <p><b>Hyperspectral imaging</b> captures hundreds of narrow, contiguous bands, providing detailed signatures that reveal subtle biophysical differences among species. This resolution is particularly effective where species share superficially similar reflectance (Ramsey et al. 2005; Hestir et al. 2007; Khanna et al. 2011). Ramsey et al. (2005), Hestir et al. (2007), and Khanna et al. (2011) each used hyperspectral data to map invasive floating aquatic macrophytes such as water hyacinth. Khanna et al. (2011) employed spectral angle mapper and linear spectral unmixing in a decision-tree format, effective across variable conditions over several years, while Diao and Wang (2014) combined multispectral satellite imagery with aerial hyperspectral data for finer-scale classification. Parker et al. (2021) note that pairing hyperspectral imagery with LiDAR can improve accuracy further, though accounting for phenological spectral variation remains a challenge (Hestir et al. 2007).</p>
+        <p><b>Unmanned aerial vehicles</b> (UAVs) with digital cameras can rapidly generate orthomosaics at high spatial and temporal resolution, offering a cost-efficient alternative to airborne and spaceborne platforms (Alvarez-Taboada et al. 2017; Mafanya et al. 2018). Their flexibility in acquisition timing and resolution often exceeds what satellite and manned platforms can match, though preprocessing and radiometric calibration remain obstacles. Alvarez-Taboada et al. (2017) used UAV and WorldView-2 imagery to quantify <span class="sci">Hakea sericea</span> cover using multispectral bands and textural features, and Mafanya et al. (2018) demonstrated the importance of radiometric calibration for large-scale UAV mapping of <span class="sci">Harrisia pomanensis</span>, using a grey-scale calibration framework to improve consistency across varying illumination.</p>
+
+        <h3>Common classification methods</h3>
+        <p><b>Maximum likelihood classification (MLC)</b> is a parametric supervised technique that assigns each pixel to the class with the highest probability of membership, assuming Gaussian-distributed spectral values within each class. It is widely used in land-cover mapping and has been applied to invasive-species detection. Laba et al. (2007) applied MLC to QuickBird imagery for mapping invasive wetland plants, achieving overall accuracies of 64.9% to 73.7% across 20-class maps, which fuzzy-set analysis improved to 75% to 83%. The method performed poorly in areas of spectral confusion, such as intertidal zones where soil and water are hard to distinguish.</p>
+        <p><b>Object-based image analysis (OBIA)</b> segments imagery into spatially contiguous clusters based on both spectral and spatial characteristics, classifying at the object level rather than pixel by pixel. This reduces the noise inherent in pixel-based classification and suits high-resolution imagery well. Alvarez-Taboada et al. (2017) applied OBIA with vegetation and texture indices to map <span class="sci">Hakea sericea</span>, reaching 93% accuracy with WorldView-2 imagery and 75% with UAV imagery.</p>
+        <p><b>Spectral angle mapper (SAM)</b> classifies pixels by the angular distance between spectral signatures, which makes it relatively insensitive to illumination variation. Khanna et al. (2011) integrated SAM with spectral unmixing in the Sacramento–San Joaquin River Delta, achieving accuracies of 88% for water hyacinth, 87% for pennywort, and 71% for water primrose. Hestir et al. (2007) combined SAM with spectral mixture analysis and logistic regression for 93.3% accuracy on water hyacinth. Both studies also incorporated continuum removal and vegetation indices such as NDVI and red-edge index.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ METHODOLOGY ============ -->
+  <section class="section" id="methods">
+    <div class="wrap">
+      <div class="section__head"><span class="section__no">03</span><h2>Methodology</h2></div>
+      <div class="prose">
+        <h3>Study area</h3>
+        <p>The Smith and Bybee Wetland Natural Area in Portland, Oregon is a significant urban wetland complex spanning roughly 2,000 acres. It encompasses the interconnected Smith and Bybee Lakes and supports habitat for a wide range of species, including waterfowl, juvenile salmon, and several rare species. The lakes are shaped by the Columbia Slough, tidal movement from the Columbia River, and seasonal precipitation, creating a dynamic hydrological regime that sustains high biodiversity despite the surrounding urban development (Metro 2012).</p>
+        <p>Smith Lake, the larger of the two, is a shallow water body with diverse wetland environments including marshlands, sloughs, and waterside woodlands. Bybee Lake is smaller and deeper but shares similar flora and fauna, connected to Smith Lake by a main slough. Both support native plant and wildlife communities, some regionally rare or threatened (Metro 2012).</p>
+        <p>The area's biodiversity is threatened by several invasive species, including <span class="sci">Ludwigia</span> spp., <span class="sci">Myriophyllum aquaticum</span> (parrot feather), and reed canary grass, which spread aggressively and disrupt ecosystem structure and function while impairing recreational and economic value (Metro 2012). This study focuses on <span class="sci">Ludwigia</span> spp. because of its rapid growth and the management difficulties it presents, while including additional land-cover classes to separate other vegetation, soil, and water.</p>
+      </div>
+
+      <figure class="fig">
+        <img src="images/fig1-study-area.png" alt="Map of the Smith and Bybee Wetland Natural Area delineated by ecosystem type, within Portland, Oregon, south of the Columbia River." loading="lazy" />
+        <figcaption><b>Figure 1.</b> The Smith and Bybee Wetland Natural Area delineated by ecosystem type, in Portland, OR, south of Vancouver, WA, along the southern side of the Columbia River.</figcaption>
+      </figure>
+
+      <figure class="fig">
+        <img src="images/fig2-ludwigia-mat.jpg" alt="A large green mat of water primrose covering water at Smith and Bybee Wetlands." loading="lazy" />
+        <figcaption><b>Figure 2.</b> A large mat of water primrose (<span class="sci">Ludwigia</span> spp.) at Smith and Bybee Wetlands. Source: Portland, Oregon Metro.</figcaption>
+      </figure>
+
+      <div class="prose">
+        <h3>Data sources</h3>
+        <p>The study-area boundary was defined using the National Wetland Inventory (NWI), which provides polygons delineating wetland boundaries and ecosystem types, available from the U.S. Fish and Wildlife Service. Training data for <span class="sci">Ludwigia</span> spp. locations were generated by manual visual interpretation of aerial imagery, with polygons digitized around patches showing the species' characteristic bright-green coloration and circular growth patterns.</p>
+        <p>Multispectral imagery came from the Oregon GEOhub Statewide Aerial Imagery portal. The imagery used here was captured on July 22, 2018 as part of the Oregon Statewide Imagery Program (OSIP), which provides statewide coverage as georeferenced Digital Orthophoto Quadrangles (DOQs) at 0.3-meter spatial resolution. It contains four spectral bands: red (619–651 nm), green (525–585 nm), blue (435–495 nm), and near-infrared (808–882 nm). No atmospheric or radiometric corrections were applied beyond those in the standard OSIP product, as the study area is relatively flat and the imagery was captured under uniform conditions within a single flight.</p>
+      </div>
+
+      <figure class="fig">
+        <img src="images/fig3-osip-imagery.jpg" alt="OSIP 2018 aerial imagery of the Smith and Bybee Wetland Natural Area." loading="lazy" />
+        <figcaption><b>Figure 3.</b> Oregon Statewide Imagery Program (OSIP) 2018 aerial imagery of the Smith and Bybee Wetland Natural Area.</figcaption>
+      </figure>
+
+      <div class="prose">
+        <h3>Workflow</h3>
+        <p>The workflow consisted of four phases: geodatabase construction, training-site selection, supervised classification, and accuracy assessment. A geodatabase schema was designed to organize the environmental and classification data. Training and validation sites were digitized from the aerial imagery. Maximum likelihood classification was performed in ERDAS Imagine, the results were validated with a confusion matrix, and ArcGIS Pro was used for final map production.</p>
+      </div>
+
+      <figure class="fig">
+        <img src="images/fig4-methodology.png" alt="Flowchart of the four-phase methodology for maximum likelihood classification of Ludwigia." loading="lazy" />
+        <figcaption><b>Figure 4.</b> Methodology flowchart for the maximum likelihood classification of <span class="sci">Ludwigia</span> spp.</figcaption>
+      </figure>
+
+      <div class="prose">
+        <h3>Database creation and organization</h3>
+        <p>A geodatabase was built in ArcGIS Pro to organize all spatial data. Feature classes included the NWI layer delineating wetland boundaries and ecological types; training sites for model development; accuracy-assessment sites for validation; and classification-output polygons. The schema also incorporated raster layers for the OSIP multispectral imagery and derived texture layers. Attribute domains standardized the class entries (<span class="sci">Ludwigia</span> spp., other vegetation, open water, and bare soil), and topology rules enforced the constraint that all training and accuracy sites fall within the Smith and Bybee Wetland Natural Area.</p>
+
+        <h3>Training-site selection</h3>
+        <p><span class="sci">Ludwigia</span> spp. patches were identified through visual interpretation of the OSIP imagery. The species is distinguishable from surrounding native vegetation by its bright green color, short stature, and circular growth patterns, in contrast with taller, darker species such as Pacific willow (<span class="sci">Salix lucida</span>) that also occupy the lake margins.</p>
+        <p>A total of 240 sites were digitized across four classes: <span class="sci">Ludwigia</span> spp. (n = 60), open water (n = 60), bare soil (n = 60), and other vegetation (n = 60). Each class was randomly split into equal halves, yielding 30 training and 30 validation sites per class (120 each for training and accuracy assessment). This equal allocation ensured that no single class dominated the training data while providing sufficient spectral and textural information for each. Notably, the spatial distribution of sites was not explicitly controlled for spatial autocorrelation, which may influence accuracy estimates if nearby sites share similar spectral characteristics.</p>
+
+        <h3>Image processing and classification</h3>
+        <p>The OSIP imagery was clipped to the study area to reduce processing requirements. A variance texture layer was derived from the clipped imagery in ERDAS Imagine, measuring the local variance of pixel values within a neighborhood window to characterize spatial variability in reflectance. The four original spectral bands and their four texture layers were stacked into an eight-layer composite image for classification.</p>
+        <p>Maximum likelihood classification was performed in ERDAS Imagine using the default parameters, which assign each pixel to the class with the highest posterior probability based on the Gaussian distribution of training signatures. All eight layers (four spectral, four texture) contributed to the classification. The output was a classified raster with four classes: <span class="sci">Ludwigia</span> spp., other vegetation, bare soil, and water.</p>
+
+        <h3>Accuracy assessment</h3>
+        <p>Accuracy was evaluated using the 120 withheld validation sites (30 per class). A confusion matrix compared the classified land cover at each validation site against the visually interpreted reference class. Producer's accuracy (the proportion of reference sites correctly classified), user's accuracy (the proportion of classified sites that are correct), overall accuracy, and the kappa statistic were all calculated from the matrix.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESULTS ============ -->
+  <section class="section" id="results">
+    <div class="wrap">
+      <div class="section__head"><span class="section__no">04</span><h2>Results</h2></div>
+      <div class="prose">
+        <h3>Geodatabase</h3>
+        <p>The geodatabase was constructed with appropriate subtypes and topology rules (Table 1). The NWI polygons were clipped to the Smith and Bybee extent, and all training and accuracy sites were validated against the topology constraint requiring containment within the boundary. The OSIP imagery was clipped to the study area, and the variance texture layer was derived and composited with the original spectral bands to produce an eight-layer input image (Table 2). The classified output raster was stored in the geodatabase with four classes.</p>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data">
+          <caption>Table 1 — Vector feature classes in the geodatabase</caption>
+          <thead>
+            <tr><th scope="col" style="text-align:left">Feature class</th><th scope="col" style="text-align:left">Description</th><th scope="col" style="text-align:left">Topology rule</th><th scope="col" style="text-align:left">Subtypes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="rowhead">National Wetland Inventory</td><td style="text-align:left">Boundaries and ecosystem types of the wetland area</td><td style="text-align:left">None</td><td style="text-align:left">Freshwater forested/shrub · emergent · pond · riverine · lake</td></tr>
+            <tr><td class="rowhead">Training sites</td><td style="text-align:left">Sites used for model training</td><td style="text-align:left">Must fall within Smith &amp; Bybee</td><td style="text-align:left"><i>Ludwigia</i> · Other · Soil · Water</td></tr>
+            <tr><td class="rowhead">Accuracy sites</td><td style="text-align:left">Sites used for error analysis and refinement</td><td style="text-align:left">Must fall within Smith &amp; Bybee</td><td style="text-align:left"><i>Ludwigia</i> · Other · Soil · Water</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data">
+          <caption>Table 2 — Raster layers in the geodatabase</caption>
+          <thead>
+            <tr><th scope="col" style="text-align:left">Raster layer</th><th scope="col" style="text-align:left">Description</th><th scope="col" style="text-align:left">Layers</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="rowhead">OSIP multispectral aerial imagery</td><td style="text-align:left">Detailed view of terrain and vegetation</td><td style="text-align:left">Red (619–651 nm) · Green (525–585 nm) · Blue (435–495 nm) · NIR (808–882 nm)</td></tr>
+            <tr><td class="rowhead">Variance texture layers</td><td style="text-align:left">Variance texture derived from the imagery</td><td style="text-align:left">Red, Green, Blue, and NIR variance</td></tr>
+            <tr><td class="rowhead">Spectral &amp; textural composite</td><td style="text-align:left">Composite of spectral and texture layers</td><td style="text-align:left">Layers 1–4: OSIP bands · Layers 5–8: texture</td></tr>
+            <tr><td class="rowhead">MLC classified raster</td><td style="text-align:left">Final classification output</td><td style="text-align:left"><i>Ludwigia</i> · Other vegetation · Bare soil · Water</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="prose">
+        <h3>Classification results</h3>
+        <p>The maximum likelihood classification of the OSIP 2018 imagery is shown in Figure 5, with <span class="sci">Ludwigia</span> spp. in green, other vegetation in red, bare soil in orange, and water in blue. Figure 6 compares the original imagery with the classification output for a small pond within the study area.</p>
+      </div>
+
+      <figure class="fig">
+        <img src="images/fig5-classification-map.png" alt="Maximum likelihood classification map of Ludwigia and other land-cover classes across the wetland." loading="lazy" />
+        <div class="legend-strip">
+          <span class="chip lud"><i>Ludwigia</i> spp.</span>
+          <span class="chip veg">Other vegetation</span>
+          <span class="chip soil">Bare soil</span>
+          <span class="chip water">Water</span>
+        </div>
+        <figcaption><b>Figure 5.</b> Maximum likelihood classification map of <span class="sci">Ludwigia</span> spp. and other land-cover classes in the Smith and Bybee Wetland Natural Area.</figcaption>
+      </figure>
+
+      <figure class="fig">
+        <div class="fig__pair">
+          <div>
+            <div class="lbl">(a) OSIP 2018 imagery</div>
+            <img src="images/fig6a-pond-imagery.jpg" alt="A small pond as seen in OSIP 2018 aerial imagery." loading="lazy" />
+          </div>
+          <div>
+            <div class="lbl">(b) MLC classification</div>
+            <img src="images/fig6b-pond-classified.jpg" alt="The same small pond after maximum likelihood classification." loading="lazy" />
+          </div>
+        </div>
+        <figcaption><b>Figure 6.</b> A small pond within the Smith and Bybee Wetlands: a side-by-side comparison of (a) the OSIP 2018 imagery and (b) the maximum likelihood classification results.</figcaption>
+      </figure>
+
+      <div class="prose">
+        <p>Mean spectral and textural values for each class are given in Table 3 and Figure 7. Both <span class="sci">Ludwigia</span> spp. and other vegetation showed similarly high reflectance in the near-infrared band (222.63 and 223.95, respectively), consistent with healthy, photosynthetically active vegetation. In the visible spectrum, <span class="sci">Ludwigia</span> spp. reflected slightly more than the other-vegetation class, suggesting differences in pigment content or leaf structure. Among the texture layers, only the green-band variance (Layer 6) differed notably between the two vegetation classes: <span class="sci">Ludwigia</span> spp. showed lower variance (48.31) than other vegetation (98.52), indicating greater textural uniformity. This likely reflects the monospecific composition of <span class="sci">Ludwigia</span> mats compared with the diverse mixture captured in the other-vegetation class.</p>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data">
+          <caption>Table 3 — Mean spectral and textural values by class and layer</caption>
+          <thead>
+            <tr>
+              <th scope="col" style="text-align:left">Class</th>
+              <th scope="col">L1 Red</th><th scope="col">L2 Grn</th><th scope="col">L3 Blu</th><th scope="col">L4 NIR</th>
+              <th scope="col">L5 RTx</th><th scope="col">L6 GTx</th><th scope="col">L7 BTx</th><th scope="col">L8 NTx</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row"><span class="chip lud"><i>Ludwigia</i></span></th><td>104.16</td><td>145.45</td><td>94.15</td><td>222.63</td><td>64.78</td><td>48.31</td><td>25.55</td><td>8.27</td></tr>
+            <tr><th scope="row"><span class="chip veg">Other veg</span></th><td>68.42</td><td>106.52</td><td>76.68</td><td>223.95</td><td>56.15</td><td>98.52</td><td>19.81</td><td>6.21</td></tr>
+            <tr><th scope="row"><span class="chip soil">Bare soil</span></th><td>165.23</td><td>151.69</td><td>139.03</td><td>193.48</td><td>28.74</td><td>26.71</td><td>19.01</td><td>7.89</td></tr>
+            <tr><th scope="row"><span class="chip water">Water</span></th><td>86.71</td><td>91.77</td><td>87.54</td><td>54.23</td><td>53.72</td><td>48.13</td><td>46.44</td><td>70.76</td></tr>
+            <tr class="note"><td colspan="9">L1–L4 = spectral bands; L5–L8 = variance texture layers for red, green, blue, and NIR, respectively.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-legend">
+          <span class="chip lud"><i>Ludwigia</i></span>
+          <span class="chip veg">Other vegetation</span>
+          <span class="chip soil">Bare soil</span>
+          <span class="chip water">Water</span>
+        </div>
+        <div id="chart"></div>
+        <p style="font-family:var(--mono);font-size:0.78rem;color:var(--ink-soft);margin-top:0.85rem;max-width:62ch;line-height:1.55;"><b style="color:var(--c-ludwigia-deep)">Figure 7.</b> Mean spectral and textural values by class and layer. The green-band texture (L6) is where <i>Ludwigia</i> separates most clearly from other vegetation.</p>
+      </div>
+
+      <div class="prose">
+        <h3>Accuracy assessment</h3>
+        <p>The confusion matrix is shown in Table 4. Overall accuracy was 89.2% (107 of 120 sites correctly classified), with a kappa statistic of 0.856, indicating strong agreement between predicted and observed classes.</p>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data">
+          <caption>Table 4 — Confusion matrix for the MLC of OSIP 2018 imagery</caption>
+          <thead>
+            <tr>
+              <th scope="col" style="text-align:left">Classified ↓ / Reference →</th>
+              <th scope="col"><i>Ludwigia</i></th><th scope="col">Other veg</th><th scope="col">Bare soil</th><th scope="col">Water</th>
+              <th scope="col" class="total">Total</th><th scope="col">User's acc.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row"><span class="chip lud"><i>Ludwigia</i></span></th><td class="diag">27</td><td>2</td><td>1</td><td>0</td><td class="total">30</td><td>90.0%</td></tr>
+            <tr><th scope="row"><span class="chip veg">Other veg</span></th><td>4</td><td class="diag">26</td><td>0</td><td>0</td><td class="total">30</td><td>86.7%</td></tr>
+            <tr><th scope="row"><span class="chip soil">Bare soil</span></th><td>2</td><td>0</td><td class="diag">28</td><td>0</td><td class="total">30</td><td>93.3%</td></tr>
+            <tr><th scope="row"><span class="chip water">Water</span></th><td>0</td><td>0</td><td>4</td><td class="diag">26</td><td class="total">30</td><td>86.7%</td></tr>
+            <tr class="foot"><td class="rowhead" style="text-align:left">Total</td><td>33</td><td>28</td><td>33</td><td>26</td><td class="total">120</td><td></td></tr>
+            <tr class="foot"><td class="rowhead" style="text-align:left">Producer's acc.</td><td>81.8%</td><td>92.9%</td><td>84.8%</td><td>100%</td><td class="hl">89.2%</td><td class="hl">κ 0.856</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="prose">
+        <p>For the target class, <span class="sci">Ludwigia</span> spp. achieved a producer's accuracy of 81.8% and a user's accuracy of 90.0%. Classification was most accurate within the open lake, where <span class="sci">Ludwigia</span> occurred in relative isolation from other vegetation, and least accurate in transitional zones with mixed vegetation or grasslands inside the freshwater forested/shrub wetland areas. Overclassification of <span class="sci">Ludwigia</span> was most common in grassy areas outside the lake proper, where the species would be ecologically unlikely to occur. Underclassification occurred within larger <span class="sci">Ludwigia</span> patches, where morphological variation produced spectral and textural signatures that diverged from those of smaller, more uniform patches, causing portions to be misclassified as other vegetation.</p>
+        <p>Other vegetation and water each achieved user accuracies of 86.7%. For water, confusion with bare soil likely resulted from high sediment loads in shallow areas. The model reached 100% producer's accuracy for water and 92.9% for other vegetation, indicating reliable detection of these classes when present.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DISCUSSION ============ -->
+  <section class="section" id="discussion">
+    <div class="wrap">
+      <div class="section__head"><span class="section__no">05</span><h2>Discussion</h2></div>
+      <div class="prose">
+        <p>The classification produced an overall accuracy of 89.2% and a kappa of 0.856, indicating that this is a viable approach for mapping <span class="sci">Ludwigia</span> spp. in the Smith and Bybee Wetland Natural Area using freely available imagery and standard GIS software. The target species was classified with 90.0% user's accuracy, meaning areas identified as <span class="sci">Ludwigia</span> were correct nine times out of ten. These results compare favorably with the MLC accuracies reported by Laba et al. (2007) for invasive wetland plant mapping (64.9% to 73.7% overall), though the present study used a simpler four-class scheme than their 20-class maps.</p>
+
+        <p class="pull">The clearest signal was not in the spectral bands at all, but in the texture of the green band.</p>
+
+        <p>The most discriminating feature between <span class="sci">Ludwigia</span> and other vegetation was not the spectral bands themselves, where NIR reflectance was nearly identical, but the green-band texture variance (Layer 6). <span class="sci">Ludwigia</span> showed substantially lower textural variance (48.31) than other vegetation (98.52), reflecting the species' tendency to form dense, homogeneous mats. This supports the decision to include variance texture layers in the composite. The remaining three texture layers showed minimal differences between the two vegetation classes, which may warrant investigating alternative texture measures (such as contrast, entropy, or homogeneity from grey-level co-occurrence matrices) in future work.</p>
+
+        <p>The most significant errors followed two patterns. First, overclassification of <span class="sci">Ludwigia</span> in grassland areas of the freshwater forested/shrub wetland zones suggests that some terrestrial grasses share spectral or textural characteristics with the target. Because <span class="sci">Ludwigia</span> is an emergent aquatic species, these false positives could likely be reduced by applying a spatial mask based on the NWI wetland-type polygons already in the geodatabase, restricting classification to lake, pond, and emergent wetland areas. Second, underclassification within large <span class="sci">Ludwigia</span> patches indicates that the species' spectral and textural properties vary with patch size and possibly growth stage. Khanna et al. (2011) reported similar phenotypic variability in aquatic macrophytes, which they addressed with hyperspectral methods and decision-tree classifiers. Increasing the diversity of training sites to capture this within-species variability, or stratifying training by patch size, could improve producer's accuracy.</p>
+
+        <p>Several methodological limitations should be acknowledged. The study used ERDAS Imagine's default MLC parameters, which apply equal prior probabilities to all classes and do not reject low-probability classifications. Adjusting priors to reflect the actual proportions of land-cover classes, or applying a probability threshold to flag uncertain pixels, could improve specificity. The variance texture window size was not optimized, and window size can meaningfully affect texture-based discrimination. The random split of training and validation sites also did not account for spatial autocorrelation, which may inflate reported accuracy if adjacent sites share similar spectral characteristics (Foody 2002); future work should consider spatially stratified sampling designs for more conservative estimates.</p>
+
+        <p>No atmospheric or radiometric corrections were applied beyond those embedded in the OSIP product. While the flat terrain and single-date acquisition reduce the impact of these factors relative to mountainous or multi-temporal studies (Vanonckelen et al. 2013), the literature review identified atmospheric and topographic correction as contributors to improved accuracy. The 0.3-meter resolution of the OSIP imagery is high relative to the satellite sensors used in many reviewed studies, which partially compensates for its four-band spectral limitation compared with hyperspectral platforms.</p>
+
+        <p>Several directions could improve on these results. Adding spectral indices such as NDVI, NDWI, or red-edge index could provide supplementary discriminatory information, as shown by Hestir et al. (2007) and Khanna et al. (2011). Temporal analysis using multi-date imagery would allow tracking of <span class="sci">Ludwigia</span> expansion and seasonal dynamics, informing both management timing and distribution modeling, and the OSIP program's periodic updates provide a foundation for it. Machine-learning classifiers such as random forest (Ade et al. 2022) and support vector machines can accommodate non-linear spectral relationships and high-dimensional input, potentially improving discrimination in areas of spectral overlap, while object-based image analysis (Alvarez-Taboada et al. 2017) could reduce pixel-level noise. Finally, the methodology demonstrated here, using freely available imagery and widely accessible software, could be adapted to other wetland systems where <span class="sci">Ludwigia</span> spp. or similar invasives are present, provided training data are developed for local conditions.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONCLUSION ============ -->
+  <section class="section" id="conclusion">
+    <div class="wrap">
+      <div class="section__head"><span class="section__no">06</span><h2>Conclusion</h2></div>
+      <div class="prose">
+        <p>This study demonstrated that maximum likelihood classification applied to OSIP multispectral aerial imagery can produce a usable map of <span class="sci">Ludwigia</span> spp. distribution in the Smith and Bybee Wetland Natural Area, achieving an overall accuracy of 89.2% and a kappa of 0.856. The approach is replicable with standard GIS software and freely available imagery, making it accessible to land managers without specialized remote-sensing infrastructure. Textural variance in the green band emerged as a meaningful discriminator between <span class="sci">Ludwigia</span> and other vegetation, while the species' high NIR reflectance and visible-spectrum characteristics aligned closely with those of native vegetation.</p>
+        <p>The primary challenges, overclassification in terrestrial grasslands and underclassification within large, morphologically variable patches, point to specific improvements: ecological masking, diversified training data, and alternative texture or spectral measures. Integrating additional spectral indices, temporal analysis, and machine-learning classifiers is a natural progression for this work. Future research should aim to combine these elements into a more robust and transferable framework for invasive-species monitoring in urban wetland ecosystems.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ REFERENCES ============ -->
+  <section class="section" id="references">
+    <div class="wrap">
+      <div class="section__head"><span class="section__no">07</span><h2>References</h2></div>
+      <ol class="refs">
+        <li>Ade, C., Khanna, S., Lay, M., Ustin, S. L., &amp; Hestir, E. L., 2022. Genus-level mapping of invasive floating aquatic vegetation using Sentinel-2 satellite remote sensing. <em>Remote Sensing</em>, 14 (13), 3013–3034.</li>
+        <li>Alvarez-Taboada, F., Paredes, C., &amp; Julián-Pelaz, J., 2017. Mapping of the invasive species <em>Hakea sericea</em> using unmanned aerial vehicle (UAV) and WorldView-2 imagery and an object-oriented approach. <em>Remote Sensing</em>, 9 (9), 913–921.</li>
+        <li>Dandelot, S., Verlaque, R., Dutartre, A., &amp; Cazaubon, A., 2005. Ecological, dynamic and taxonomic problems due to <em>Ludwigia</em> (Onagraceae) in France. <em>Hydrobiologia</em>, 551 (1), 131–136.</li>
+        <li>Diao, C., &amp; Wang, L., 2014. Development of an invasive species distribution model with fine-resolution remote sensing. <em>International Journal of Applied Earth Observation and Geoinformation</em>, 30, 65–75.</li>
+        <li>Hestir, E. L., Khanna, S., Andrew, M. E., Santos, M. J., Viers, J. H., Greenberg, J. A., Rajapakse, S. S., &amp; Ustin, S. L., 2007. Identification of invasive vegetation using hyperspectral remote sensing in the California Delta ecosystem. <em>Remote Sensing of Environment</em>, 112 (11), 4034–4047.</li>
+        <li>Khanna, S., Santos, M. J., Ustin, S. L., &amp; Haverkamp, P. J., 2011. An integrated approach to a biophysiologically based classification of floating aquatic macrophytes. <em>International Journal of Remote Sensing</em>, 32 (4), 1067–1094.</li>
+        <li>Laba, M., Downs, R., Smith, S., Welsh, S., Neider, C., White, S., Richmond, M., Philpot, W., &amp; Baveye, P., 2007. Mapping invasive wetland plants in the Hudson River National Estuarine Research Reserve using QuickBird satellite imagery. <em>Remote Sensing of Environment</em>, 112 (1), 286–300.</li>
+        <li>Mafanya, M., Tsele, P., Botai, J. O., Manyama, P., Chirima, G. J., &amp; Monate, T., 2018. Radiometric calibration framework for ultra-high-resolution UAV-derived orthomosaics for large-scale mapping of invasive alien plants in semi-arid woodlands: <em>Harrisia pomanensis</em> as a case study. <em>International Journal of Remote Sensing</em>, 39 (15), 5119–5140.</li>
+        <li>Metro, 2012. <em>Smith and Bybee Comprehensive Natural Resource Management Plan.</em> Available from oregonmetro.gov [accessed February 1, 2024].</li>
+        <li>Parker, K., Elmes, A., Boucher, P., Hallett, R. A., Thompson, J. E., Simek, Z., Bowers, J., &amp; Reinmann, A. B., 2021. Crossing the great divide: bridging the researcher–practitioner gap to maximize the utility of remote sensing for invasive-species monitoring and management. <em>Remote Sensing</em>, 13 (20), 4142–4157.</li>
+        <li>Ramsey III, E., Rangoonwala, A., Nelson, G., &amp; Ehrlich, R., 2005. Mapping the invasive species Chinese tallow with EO1 satellite Hyperion hyperspectral image data and relating tallow occurrences to a classified Landsat Thematic Mapper land-cover map. <em>International Journal of Remote Sensing</em>, 26 (8), 1637–1657.</li>
+        <li>Vanonckelen, S., Lhermitte, S., &amp; Van Rompaey, A., 2013. The effect of atmospheric and topographic correction methods on land-cover classification accuracy. <em>International Journal of Applied Earth Observation and Geoinformation</em>, 24, 9–21.</li>
+      </ol>
+
+      <footer class="foot">
+        <div class="foot__row">
+          <span><b>Anthony Fowler</b> · M.S., Northwest Missouri State University · April 2024</span>
+          <span>Identifying <i>Ludwigia</i> spp. · Smith &amp; Bybee Wetlands, Oregon</span>
+        </div>
+      </footer>
+    </div>
+  </section>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
