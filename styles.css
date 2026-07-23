@@ -1,0 +1,214 @@
+/* ============================================================
+   Anthony Fowler — portfolio homepage
+   Shares the design system of the Ludwigia project page:
+   same palette, type stack, grid texture, and devices
+   (mono eyebrows, hairlines, legend chips).
+   ============================================================ */
+
+:root {
+  /* Core — identical to project page */
+  --ink:        #16211d;
+  --ink-soft:   #45544e;
+  --paper:      #f1f2ec;
+  --paper-2:    #e8e9e1;
+  --line:       rgba(22, 33, 29, 0.14);
+  --line-2:     rgba(22, 33, 29, 0.28);
+
+  /* Functional palette (land-cover classes on the project page;
+     here they key the four practice areas + project accents) */
+  --c-ludwigia: #2f9e44;
+  --c-ludwigia-deep: #1f6f30;
+  --c-veg:      #a8472f;
+  --c-soil:     #c17d2b;
+  --c-water:    #1b5560;
+  --c-water-deep: #123c45;
+
+  --display: "Fraunces", Georgia, serif;
+  --sans: "IBM Plex Sans", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --measure: 68ch;
+}
+
+/* ---------- Reset / base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation: none !important; transition: none !important; }
+}
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 1.0625rem;
+  line-height: 1.72;
+  font-feature-settings: "kern" 1, "liga" 1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img { max-width: 100%; display: block; }
+a { color: var(--c-ludwigia-deep); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { color: var(--c-ludwigia); }
+
+/* faint survey-grid texture, same as project page */
+body::before {
+  content: "";
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 96px 96px;
+  opacity: 0.35;
+  mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 78%);
+}
+
+.wrap { width: min(1080px, 100% - 3rem); margin-inline: auto; }
+main { padding-bottom: 4rem; }
+
+/* ---------- Top bar ---------- */
+.topbar {
+  position: sticky; top: 0; z-index: 40;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 0.7rem clamp(1rem, 4vw, 2rem);
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: saturate(1.4) blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.topbar__id { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--ink-soft); }
+.topbar__id b { color: var(--ink); font-weight: 600; }
+.topbar__nav { display: flex; gap: 1.4rem; }
+.topbar__nav a { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.05em;
+  text-transform: uppercase; text-decoration: none; color: var(--ink-soft); }
+.topbar__nav a:hover { color: var(--c-ludwigia-deep); }
+
+/* ---------- Hero ---------- */
+.hero { padding: clamp(3rem, 8vw, 5.5rem) 0 2rem; }
+.hero__grid { display: grid; gap: clamp(2rem, 5vw, 3.5rem); align-items: center;
+  grid-template-columns: 1fr; }
+.hero__eyebrow { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--c-ludwigia-deep); margin: 0 0 1.3rem;
+  display: flex; align-items: center; gap: 0.7rem; }
+.hero__eyebrow::before { content: ""; width: 2rem; height: 1px; background: var(--c-ludwigia); }
+
+.hero h1 { margin: 0; font-family: var(--display); font-weight: 340;
+  font-size: clamp(2.9rem, 8vw, 4.8rem); line-height: 0.98; letter-spacing: -0.015em;
+  font-optical-sizing: auto; }
+.hero h1 .tag { display: block; font-family: var(--sans); font-weight: 400;
+  font-size: clamp(0.95rem, 2.2vw, 1.08rem); letter-spacing: 0.01em; line-height: 1.6;
+  color: var(--ink-soft); margin-top: 1rem; max-width: 46ch; }
+.hero__meta { margin-top: 1.8rem; display: flex; flex-wrap: wrap; gap: 0.4rem 1.6rem;
+  font-family: var(--mono); font-size: 0.76rem; color: var(--ink-soft); }
+.hero__meta b { color: var(--ink); font-weight: 600; }
+
+.hero__fig { position: relative; max-width: 420px; }
+.hero__fig figcaption { font-family: var(--mono); font-size: 0.72rem; color: var(--ink-soft);
+  margin-top: 0.6rem; line-height: 1.5; }
+.hydro-svg { width: 100%; height: auto; display: block; }
+.hydro-svg .flow { stroke-dasharray: 480; stroke-dashoffset: 480;
+  animation: draw 2.4s ease-out forwards; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .hydro-svg .flow { stroke-dasharray: none; stroke-dashoffset: 0; }
+}
+
+/* ---------- Focus strip ---------- */
+.focus { display: flex; flex-wrap: wrap; gap: 0.6rem 1.6rem;
+  border-block: 1px solid var(--line-2); padding: 1rem 0; }
+
+/* legend chips — same device as project page */
+.chip { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--mono);
+  font-size: 0.75rem; letter-spacing: 0.01em; white-space: nowrap; }
+.chip::before { content: ""; width: 0.7em; height: 0.7em; border-radius: 2px;
+  background: var(--_c); box-shadow: 0 0 0 1px rgba(0,0,0,.12) inset; flex: none; }
+.chip.lud { --_c: var(--c-ludwigia); }
+.chip.veg { --_c: var(--c-veg); }
+.chip.soil { --_c: var(--c-soil); }
+.chip.water { --_c: var(--c-water); }
+
+/* ---------- Sections ---------- */
+.section { padding-top: clamp(3rem, 7vw, 4.5rem); }
+.section__head { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1.6rem;
+  border-bottom: 1px solid var(--line-2); padding-bottom: 0.9rem; }
+.section__no { font-family: var(--mono); font-size: 0.8rem; color: var(--c-ludwigia);
+  font-weight: 500; letter-spacing: 0.04em; }
+.section__head h2 { font-family: var(--display); font-weight: 400;
+  font-size: clamp(1.7rem, 4.5vw, 2.4rem); line-height: 1.05; margin: 0;
+  letter-spacing: -0.01em; }
+
+.prose { max-width: var(--measure); }
+.prose p { margin: 0 0 1.15rem; }
+
+/* ---------- Project cards ---------- */
+.cards { display: grid; gap: 1.2rem; grid-template-columns: 1fr; }
+@media (min-width: 720px) { .cards { grid-template-columns: 1fr 1fr; } }
+
+.card { --_accent: var(--c-ludwigia); --_accent-deep: var(--c-ludwigia-deep);
+  display: flex; flex-direction: column; gap: 0.55rem;
+  padding: 1.5rem 1.5rem 1.35rem; text-decoration: none; color: var(--ink);
+  background: var(--paper-2); border: 1px solid var(--line-2); border-radius: 3px;
+  border-top: 3px solid var(--_accent);
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.card:hover { color: var(--ink); transform: translateY(-3px);
+  box-shadow: 0 18px 40px -28px rgba(22,33,29,.55); border-color: var(--_accent); }
+.card--lud   { --_accent: var(--c-ludwigia); --_accent-deep: var(--c-ludwigia-deep); }
+.card--water { --_accent: var(--c-water);    --_accent-deep: var(--c-water-deep); }
+.card--soil  { --_accent: var(--c-soil);     --_accent-deep: #8a5a1e; }
+.card--veg   { --_accent: var(--c-veg);      --_accent-deep: #7d3423; }
+
+.card__meta { margin: 0; font-family: var(--mono); font-size: 0.7rem;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-soft);
+  display: flex; gap: 0.55rem; }
+.card__sep { color: var(--line-2); }
+.card__title { margin: 0; font-family: var(--display); font-weight: 420;
+  font-size: 1.45rem; line-height: 1.15; letter-spacing: -0.005em; }
+.card__title em { font-style: italic; }
+.card__summary { margin: 0; font-size: 0.95rem; line-height: 1.6; color: var(--ink-soft); }
+.card__tags { margin: 0.2rem 0 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.card__tag { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.03em;
+  color: var(--ink-soft); border: 1px solid var(--line-2); border-radius: 2px;
+  padding: 0.14rem 0.45rem; background: var(--paper); }
+.card__go { margin-top: auto; padding-top: 0.7rem; font-family: var(--mono);
+  font-size: 0.74rem; letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--_accent-deep); }
+.card:hover .card__go { color: var(--_accent); }
+
+/* ---------- Capabilities ---------- */
+.caps { display: grid; gap: 1.2rem; grid-template-columns: 1fr; }
+@media (min-width: 640px)  { .caps { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1000px) { .caps { grid-template-columns: repeat(4, 1fr); } }
+
+.cap { border: 1px solid var(--line); border-radius: 3px; background: var(--paper-2);
+  padding: 1.2rem 1.3rem; }
+.cap__title { display: flex; align-items: center; gap: 0.55rem; margin: 0 0 0.7rem;
+  font-family: var(--sans); font-weight: 600; font-size: 1.02rem; letter-spacing: 0.01em; }
+.cap__title .chip { gap: 0; }           /* chip used as a bare swatch here */
+.cap ul { list-style: none; margin: 0; padding: 0; }
+.cap li { font-size: 0.9rem; line-height: 1.5; color: var(--ink-soft);
+  padding: 0.32rem 0; border-bottom: 1px solid var(--line); }
+.cap li:last-child { border-bottom: none; }
+
+/* ---------- Footer ---------- */
+.foot { margin-top: 4.5rem; border-top: 1px solid var(--line-2); padding: 2rem 0 0.5rem; }
+.foot__row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem;
+  font-family: var(--mono); font-size: 0.74rem; color: var(--ink-soft); }
+.foot__row b { color: var(--ink); font-weight: 600; }
+
+/* ---------- Reveal animation ---------- */
+.reveal { opacity: 0; transform: translateY(14px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; } }
+
+/* ---------- Skip link / focus ---------- */
+.skip { position: absolute; left: -999px; top: 0; background: var(--ink); color: var(--paper);
+  padding: 0.6rem 1rem; z-index: 100; font-family: var(--mono); font-size: 0.8rem; }
+.skip:focus { left: 0.5rem; top: 0.5rem; }
+:focus-visible { outline: 2px solid var(--c-ludwigia); outline-offset: 2px; border-radius: 2px; }
+
+/* ---------- Desktop hero split ---------- */
+@media (min-width: 880px) {
+  .hero__grid { grid-template-columns: 1.15fr 0.85fr; }
+}
