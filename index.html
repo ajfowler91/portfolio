@@ -1,1 +1,243 @@
-USFS and BLM Dispersed Camping Maps Surrounding Eugene, OR
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anthony Fowler — Geospatial Analyst</title>
+<meta name="description" content="Portfolio of Anthony Fowler: geospatial analysis, elevation-derived hydrography, land cover classification, and open-source GIS development.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip" href="#projects">Skip to projects</a>
+
+<header class="topbar">
+  <div class="topbar__id"><b>A. Fowler</b> · Geospatial Portfolio</div>
+  <nav class="topbar__nav" aria-label="Site">
+    <a href="#projects">Projects</a>
+    <a href="#capabilities">Capabilities</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <!-- ================= Hero ================= -->
+    <section class="hero">
+      <div class="hero__grid">
+        <div>
+          <p class="hero__eyebrow">Geospatial Analysis · Corvallis, OR</p>
+          <h1>Anthony Fowler
+            <span class="tag">Geospatial analyst working in elevation-derived hydrography,
+            land cover analysis, and GIS development with ArcPy, open-source tooling,
+            and PostgreSQL&#8202;/&#8202;PostGIS.</span>
+          </h1>
+          <div class="hero__meta">
+            <span><b>B.S.</b> Forest Management, Oregon State University</span>
+            <span><b>Focus</b> Hydrography · Remote sensing · Automation</span>
+          </div>
+        </div>
+
+        <!-- Signature figure: stream network derived from a DEM, drawn in the site palette -->
+        <figure class="hero__fig" aria-hidden="true">
+          <svg class="hydro-svg" viewBox="0 0 420 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stylized elevation contours with a derived stream network">
+            <!-- contours -->
+            <g fill="none" stroke="var(--line-2)" stroke-width="1">
+              <path d="M20 60 C 120 20, 260 30, 400 70"/>
+              <path d="M10 110 C 130 70, 270 80, 410 118"/>
+              <path d="M14 165 C 140 125, 280 135, 406 170"/>
+              <path d="M20 220 C 150 185, 280 190, 400 224"/>
+              <path d="M28 275 C 160 245, 280 248, 396 278"/>
+            </g>
+            <!-- derived flowlines -->
+            <g fill="none" stroke="var(--c-water)" stroke-linecap="round">
+              <path class="flow" stroke-width="1.4" d="M84 30 C 96 90, 130 130, 168 168"/>
+              <path class="flow" stroke-width="1.4" d="M212 24 C 200 80, 186 130, 172 166"/>
+              <path class="flow" stroke-width="1.4" d="M330 44 C 300 100, 250 150, 196 186"/>
+              <path class="flow" stroke-width="1.4" d="M40 140 C 80 160, 120 172, 160 180"/>
+              <path class="flow" stroke-width="2.4" d="M170 170 C 190 210, 210 250, 216 316"/>
+              <path class="flow" stroke-width="1.4" d="M300 210 C 270 240, 240 262, 222 280"/>
+            </g>
+            <!-- confluence nodes -->
+            <g fill="var(--c-water-deep)">
+              <circle cx="170" cy="170" r="3"/>
+              <circle cx="196" cy="186" r="2.4"/>
+              <circle cx="220" cy="284" r="2.4"/>
+              <circle cx="216" cy="316" r="3.4"/>
+            </g>
+          </svg>
+          <figcaption>Flowline delineation from elevation — the core of EDH work.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ================= Focus strip ================= -->
+    <div class="focus" aria-label="Focus areas">
+      <span class="chip water">Elevation-derived hydrography</span>
+      <span class="chip lud">Land cover analysis</span>
+      <span class="chip soil">ArcPy &amp; open-source development</span>
+      <span class="chip veg">PostgreSQL / PostGIS</span>
+    </div>
+
+    <!-- ================= Projects ================= -->
+    <section class="section" id="projects">
+      <div class="section__head">
+        <span class="section__no">01</span>
+        <h2>Projects</h2>
+      </div>
+
+      <!-- Cards are rendered from projects.js. To add a project, edit that file only. -->
+      <div class="cards" id="project-cards">
+        <noscript>
+          <p class="prose">
+            <a href="ludwigia-project/">Identifying <em>Ludwigia</em> spp. — remote sensing land cover classification</a>
+          </p>
+        </noscript>
+      </div>
+    </section>
+
+    <!-- ================= Capabilities ================= -->
+    <section class="section" id="capabilities">
+      <div class="section__head">
+        <span class="section__no">02</span>
+        <h2>Capabilities</h2>
+      </div>
+
+      <div class="caps">
+        <div class="cap">
+          <h3 class="cap__title"><span class="chip water"></span>Hydrography</h3>
+          <ul>
+            <li>Elevation-derived hydrography (EDH)</li>
+            <li>Lidar / DEM processing</li>
+            <li>Flowline &amp; drainage delineation</li>
+            <li>Hydro-conditioning &amp; QC</li>
+          </ul>
+        </div>
+        <div class="cap">
+          <h3 class="cap__title"><span class="chip lud"></span>Land cover</h3>
+          <ul>
+            <li>Image classification</li>
+            <li>Vegetation &amp; invasive species mapping</li>
+            <li>Accuracy assessment</li>
+            <li>Field-informed remote sensing</li>
+          </ul>
+        </div>
+        <div class="cap">
+          <h3 class="cap__title"><span class="chip soil"></span>Development</h3>
+          <ul>
+            <li>Python &amp; ArcPy automation</li>
+            <li>Open-source GIS (QGIS, GDAL/OGR)</li>
+            <li>Repeatable geoprocessing pipelines</li>
+            <li>Tool &amp; script authoring</li>
+          </ul>
+        </div>
+        <div class="cap">
+          <h3 class="cap__title"><span class="chip veg"></span>Data</h3>
+          <ul>
+            <li>PostgreSQL / PostGIS</li>
+            <li>Spatial SQL &amp; query design</li>
+            <li>Database schema for GIS workflows</li>
+            <li>Data management &amp; versioning</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Contact ================= -->
+    <section class="section" id="contact">
+      <div class="section__head">
+        <span class="section__no">03</span>
+        <h2>Contact</h2>
+      </div>
+      <div class="prose">
+        <p>
+          <a href="mailto:anthonyjfowler@gmail.com">anthonyjfowler@gmail.com</a>
+          &nbsp;·&nbsp;
+          <a href="https://github.com/ajfowler91">github.com/ajfowler91</a>
+        </p>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <div class="foot__row">
+        <span><b>Anthony Fowler</b> — Geospatial Portfolio</span>
+        <span id="foot-year"></span>
+      </div>
+    </footer>
+
+  </div>
+</main>
+
+<script src="projects.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var mount = document.getElementById("project-cards");
+  var projects = window.PROJECTS || [];
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text) n.textContent = text;
+    return n;
+  }
+
+  projects.forEach(function (p) {
+    var card = el("a", "card card--" + (p.accent || "lud"));
+    card.href = p.url;
+
+    var meta = el("p", "card__meta");
+    meta.appendChild(el("span", null, p.year || ""));
+    if (p.type) {
+      meta.appendChild(el("span", "card__sep", "·"));
+      meta.appendChild(el("span", null, p.type));
+    }
+    card.appendChild(meta);
+
+    var title = el("h3", "card__title");
+    // titleHtml allows italics for scientific names; title is plain-text fallback
+    if (p.titleHtml) { title.innerHTML = p.titleHtml; } else { title.textContent = p.title; }
+    card.appendChild(title);
+
+    if (p.summary) card.appendChild(el("p", "card__summary", p.summary));
+
+    if (p.tags && p.tags.length) {
+      var tags = el("p", "card__tags");
+      p.tags.forEach(function (t, i) {
+        if (i > 0) tags.appendChild(document.createTextNode("  "));
+        tags.appendChild(el("span", "card__tag", t));
+      });
+      card.appendChild(tags);
+    }
+
+    card.appendChild(el("span", "card__go", "View project →"));
+    mount.appendChild(card);
+  });
+
+  document.getElementById("foot-year").textContent = new Date().getFullYear();
+
+  // Scroll reveal, matching the project page behavior
+  var revealables = document.querySelectorAll(".card, .cap");
+  revealables.forEach(function (n) { n.classList.add("reveal"); });
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    revealables.forEach(function (n) { io.observe(n); });
+  } else {
+    revealables.forEach(function (n) { n.classList.add("in"); });
+  }
+})();
+</script>
+
+</body>
+</html>

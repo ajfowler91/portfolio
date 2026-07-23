@@ -1,3 +1,18 @@
-theme: jekyll-theme-slate
-title: Portfolio of Anthony Fowler
-description: This is my github homepage where you can find links to some of my projects
+# GitHub Pages configuration
+# The site is plain static HTML/CSS/JS; Jekyll only passes files through.
+
+title: Anthony Fowler — Geospatial Analyst
+description: >-
+  Portfolio of Anthony Fowler: elevation-derived hydrography, land cover
+  analysis, and GIS development with ArcPy, open-source tooling, and
+  PostgreSQL/PostGIS.
+url: "https://ajfowler91.github.io"
+baseurl: "/portfolio"
+
+# Serve files as-is; don't process them with Liquid/Markdown converters.
+exclude:
+  - README.md
+
+# Keep folders whose names start with underscores or dots out of the build
+# defaults are fine otherwise; no theme is used.
+theme: null
